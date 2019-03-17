@@ -1,5 +1,3 @@
-
-
 // Variables globales
 var arregloGeneral = [];
 var div2principal = document.getElementsByTagName('div')[1];
@@ -8,136 +6,111 @@ var numObjetoAgregado = 0;
 // Metodos al iniciar la página
 limpiarCamposPrimerDiv();
 
-function guardarPublicacion(){
 
+
+
+
+
+
+
+
+
+
+
+function guardarPublicacion(){
 	// Obtenemos los inputs del HTML
 	var Usuario = document.getElementsByTagName('input')[0].value;
 	var Descripcion = document.getElementsByTagName('input')[1].value;
 	var URL = document.getElementsByTagName('input')[2].value;
-
 	// Guardamos los datos importantes del objeto
 	var objPublicacion = guardarDatosEnObjeto(numObjetoAgregado, Usuario, Descripcion, URL);
-
 	// Almacenamos el objeto al arreglo general
 	guardarObjetoEnArreglo(objPublicacion);
-
 	limpiarCamposPrimerDiv();
 	creacionDivUsuario();
 	colocarInfoEnDivUsuario();// Tambien se coloca la seccion de comentarios
-
 	numObjetoAgregado++;
-
 }
 
 
 
 function colocarInfoEnDivUsuario(){
-
 	// Indicamos a que div de usuario colocaremos la informacion
 	var divUsuario = document.getElementById("divUsu" + numObjetoAgregado );
-
 	colocarImagenUsuarioDescripcionFecha(divUsuario);
-
 	// Colocamos el boton 
 	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")'>Comentarios: 0</button>"
-	
 	crearDivGenerarComentario(divUsuario);
 	crearDivListadoComentarios(divUsuario);
-
-
 }
 
 
 function mostrarDivsComentarios(numDivDeUsuario){
-	console.log("Entro al metodo, su valor es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
 	if(arregloGeneral[numDivDeUsuario].comentariosOcultos == true){
 		document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "block";
 		document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "block";
 		arregloGeneral[numDivDeUsuario].comentariosOcultos = false;
-		console.log("Entro al if, su valor despues de es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
 	}else{
 		document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "none";
 		document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "none";
 		arregloGeneral[numDivDeUsuario].comentariosOcultos = true;
-		console.log("Entro al else, su valor despues de es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
 	}
-	console.log("despues del if else su valor es" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
-
 }
 
 
 function colocarImagenUsuarioDescripcionFecha(divUsuario){
-
 	// Colocamos la imagen con el enlace en la respectiva etiqueta
 	divUsuario.innerHTML += " <img src='" + arregloGeneral[numObjetoAgregado].url + "' alt='No se coloco una URL valida.'>";
-
 	// Colocamos el nombre de usuario
 	divUsuario.innerHTML += "<p>Usuario: " + arregloGeneral[numObjetoAgregado].usuario;
-
 	// Colocamos la descripcion
 	divUsuario.innerHTML += "<p>Descripcion: " + arregloGeneral[numObjetoAgregado].descripcion;
-
 	// Colocamos la fecha de hoy
 	var fecha = generarFechaAutomatica();
 	divUsuario.innerHTML += "<p>Fecha de subida: " + fecha;
-
 }
 
 function crearDivListadoComentarios(divUsuario){
-
 	// Creamos 
 	divUsuario.innerHTML += "<div id='divListadoComentarios" + numObjetoAgregado + "'></div>";
 	var divListadoComentarios = document.getElementById("divListadoComentarios" + numObjetoAgregado );
 	divListadoComentarios.style.display = "none";
-
-
-
 	/*
 	// Colocamos campos dentro del div
 	var divListaComentarios = document.getElementById("divListadoComentarios" + numObjetoAgregado );
-
 	divGenerarComentario.innerHTML += "<br><br><hr class='myhrline'>Comentario: <input type='text' name='name' id='inputListadoComentario" + numObjetoAgregado + "'>";
-
 	divGenerarComentario.innerHTML += "<p id='botonGenerarComentario" + numObjetoAgregado + "'>Comentar</Button><hr class='myhrline'>";
-
 	// Ocultamos el div
 	divGenerarComentario.style.display = "none";
 	*/
 }
 
 function crearDivGenerarComentario(divUsuario){
-
 	// Creamos divGenerarComentario
 	divUsuario.innerHTML += "<div id='divGenerarComentario" + numObjetoAgregado + "'></div>";
-
 	// Colocamos campos dentro del div
 	var divGenerarComentario = document.getElementById("divGenerarComentario" + numObjetoAgregado );
-
 	divGenerarComentario.innerHTML += "<br><br><hr class='myhrline'>Escriba su comentario: <input type='text' name='name' id='generarComentarioTitulo" + numObjetoAgregado + "'>";
-
-	divGenerarComentario.innerHTML += "<button id='botonGenerarComentario" + numObjetoAgregado + "'>Comentar</Button><hr class='myhrline'>";
-
+	divGenerarComentario.innerHTML += "<button onclick='agregarComentario(" + numObjetoAgregado + ")'>Comentar</Button><hr class='myhrline'>";
 	// Ocultamos el div
 	divGenerarComentario.style.display = "none";
-	
 }
 
+function agregarComentario(){
+	agregarComentario
+}
 
 function creacionDivUsuario(){
 	var nuevoDiv = "<div id='divUsu" + numObjetoAgregado + "'></div><hr>";
 	div2principal.innerHTML += nuevoDiv;
-
 }
 
 function guardarObjetoEnArreglo(Objeto){
-
 	arregloGeneral.push(Objeto);
 	console.log(arregloGeneral);
-
 }
 
 function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
-
 	var objPublicacion = {
 		id: Id,
 		usuario: Usuario,
@@ -145,9 +118,7 @@ function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
 		url: URL,
 		comentariosOcultos: true
 	}
-
 	return objPublicacion;
-
 }
 
 function limpiarCamposPrimerDiv(){
