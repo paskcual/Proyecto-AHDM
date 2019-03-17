@@ -8,16 +8,6 @@ var numObjetoAgregado = 0;
 // Metodos al iniciar la página
 limpiarCamposPrimerDiv();
 
-
-
-
-
-
-
-
-
-
-
 function guardarPublicacion(){
 
 	// Obtenemos los inputs del HTML
@@ -59,10 +49,19 @@ function colocarInfoEnDivUsuario(){
 
 
 function mostrarDivsComentarios(numDivDeUsuario){
-
-	document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "block";
-
-	document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "block";
+	console.log("Entro al metodo, su valor es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
+	if(arregloGeneral[numDivDeUsuario].comentariosOcultos == true){
+		document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "block";
+		document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "block";
+		arregloGeneral[numDivDeUsuario].comentariosOcultos = false;
+		console.log("Entro al if, su valor despues de es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
+	}else{
+		document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "none";
+		document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "none";
+		arregloGeneral[numDivDeUsuario].comentariosOcultos = true;
+		console.log("Entro al else, su valor despues de es:" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
+	}
+	console.log("despues del if else su valor es" + arregloGeneral[numDivDeUsuario].comentariosOcultos);
 
 }
 
@@ -125,9 +124,7 @@ function crearDivGenerarComentario(divUsuario){
 
 
 function creacionDivUsuario(){
-
 	var nuevoDiv = "<div id='divUsu" + numObjetoAgregado + "'></div><hr>";
-
 	div2principal.innerHTML += nuevoDiv;
 
 }
@@ -146,7 +143,7 @@ function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
 		usuario: Usuario,
 		descripcion: Descripcion,
 		url: URL,
-		oculto = "true";
+		comentariosOcultos: true
 	}
 
 	return objPublicacion;
