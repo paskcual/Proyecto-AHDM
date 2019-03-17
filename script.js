@@ -39,7 +39,7 @@ function colocarInfoEnDivUsuario(){
 	var divUsuario = document.getElementById("divUsu" + numObjetoAgregado );
 	colocarImagenUsuarioDescripcionFecha(divUsuario);
 	// Colocamos el boton 
-	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")'>Comentarios: 0</button>"
+	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")' id='botonMostrarComentarios" + numObjetoAgregado + "' >Comentarios: 0</button>"
 	crearDivGenerarComentario(divUsuario);
 	crearDivListadoComentarios(divUsuario);
 }
@@ -55,6 +55,13 @@ function mostrarDivsComentarios(numDivDeUsuario){
 		document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "none";
 		arregloGeneral[numDivDeUsuario].comentariosOcultos = true;
 	}
+}
+
+function actualizarNumeroDeBotonDeComentarios(numDivDeUsuario){
+	var botonMostrarComentarios = document.getElementById("botonMostrarComentarios" + numDivDeUsuario);
+	botonMostrarComentarios.innerHTML = "";
+	botonMostrarComentarios.appendChild(document.createTextNode('Comentarios: ' + arregloGeneral[numDivDeUsuario].arrayComentarios.length));
+
 }
 
 
@@ -96,8 +103,64 @@ function crearDivGenerarComentario(divUsuario){
 	divGenerarComentario.style.display = "none";
 }
 
-function agregarComentario(){
-	agregarComentario
+function agregarComentario(numDeInput){
+	var valorDeInput = obtenerComentarioDeInput(numDeInput);
+	var fecha = generarFechaAutomatica();
+	var objetoComentario = creacionObjetoDeComentarios(valorDeInput, fecha);
+	almacenarObjetoComentariosEnArregloDeObjetoUsuario(objetoComentario, numDeInput);
+	mostrarComentariosEnLista(numDeInput);
+	actualizarNumeroDeBotonDeComentarios(numDeInput);
+}
+
+function mostrarComentariosEnLista(numDeInput){
+
+	// Lista donde se ponen los comentarios
+	var listaComentarios = document.getElementById("divListadoComentarios" + numDeInput);
+
+	listaComentarios.innerHTML = "";
+
+	for(var i = 0; i < arregloGeneral[numDeInput].arrayComentarios.length; i++){
+
+		// Etiqueta p donde se almacenara el comentario
+		var comentario = document.createElement('p');
+		comentario.appendChild(document.createTextNode(arregloGeneral[numDeInput].arrayComentarios[i].comentario));
+
+		// Etiqueta p donde se almacenara la fecha
+		var fecha = document.createElement('p');
+		fecha.appendChild(document.createTextNode(arregloGeneral[numDeInput].arrayComentarios[i].fecha));
+
+		listaComentarios.appendChild(comentario);
+		listaComentarios.appendChild(fecha);
+
+	}
+
+
+	
+	
+	//var linea = document.createElement('hr');
+	//linea.classList.add('myhrline');
+	
+
+
+
+}
+
+function almacenarObjetoComentariosEnArregloDeObjetoUsuario(objetoComentario, posicion){
+	arregloGeneral[posicion].arrayComentarios.push(objetoComentario);
+}
+
+function creacionObjetoDeComentarios(Comentario, Fecha){
+	var objComentario = {
+		comentario: Comentario,
+		fecha: Fecha,
+		
+	}
+	return objComentario;
+}
+
+function obtenerComentarioDeInput(numDeInput){
+	var valorDeInput = document.getElementById("generarComentarioTitulo" + numDeInput);
+	return valorDeInput.value;
 }
 
 function creacionDivUsuario(){
@@ -116,7 +179,8 @@ function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
 		usuario: Usuario,
 		descripcion: Descripcion,
 		url: URL,
-		comentariosOcultos: true
+		comentariosOcultos: true,
+		arrayComentarios: []
 	}
 	return objPublicacion;
 }
