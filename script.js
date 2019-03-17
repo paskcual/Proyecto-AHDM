@@ -2,7 +2,8 @@
 
 // Variables globales
 var arregloGeneral = [];
-var numObjetoAgregado = 0;
+var div2principal = document.getElementsByTagName('div')[1];
+var  numObjetoAgregado = 0;
 
 // Metodos al iniciar la página
 limpiarCamposPrimerDiv();
@@ -19,28 +20,49 @@ limpiarCamposPrimerDiv();
 
 function guardarPublicacion(){
 
+	// Obtenemos los inputs del HTML
 	var Usuario = document.getElementsByTagName('input')[0].value;
 	var Descripcion = document.getElementsByTagName('input')[1].value;
 	var URL = document.getElementsByTagName('input')[2].value;
 
-	var objPublicacion = guardarDatosEnObjeto(Usuario, Descripcion, URL);
+	// Guardamos los datos importantes del objeto
+	var objPublicacion = guardarDatosEnObjeto(numObjetoAgregado, Usuario, Descripcion, URL);
+
+	// Almacenamos el objeto al arreglo general
 	guardarObjetoEnArreglo(objPublicacion);
 
 	limpiarCamposPrimerDiv();
-	colocamosDivDentroDelSegundoDiv();
+	creacionDivUsuario();
+
+
+
+	
+
+	numObjetoAgregado++;
 
 }
 
 
 
+function colocarInfoEnDivUsuario(){
 
+	// Indicamos a que div de usuario colocaremos la informacion
+	
 
-function datosDeObjetoDentroDeDiv(){
-
-
+	// Colocamos la imagen con el enlace
+	<img src="url"> 
 
 }
 
+function creacionDivUsuario(){
+
+	var nuevoDiv = "<div id='divUsu" + numObjetoAgregado + "'></div><hr>";
+
+	div2principal.innerHTML += nuevoDiv;
+
+}
+
+/*
 function colocamosDivDentroDelSegundoDiv(){
 
 	var nuevoDiv = document.createElement('div');
@@ -50,7 +72,9 @@ function colocamosDivDentroDelSegundoDiv(){
 	hrDentroDeDiv();
 
 }
+*/
 
+/*
 function hrDentroDeDiv(){
 
 	var hrNuevo = document.createElement('hr');
@@ -58,6 +82,7 @@ function hrDentroDeDiv(){
 	segundoDiv.appendChild(hrNuevo);
 
 }
+*/
 
 function guardarObjetoEnArreglo(Objeto){
 
@@ -66,9 +91,10 @@ function guardarObjetoEnArreglo(Objeto){
 
 }
 
-function guardarDatosEnObjeto(Usuario, Descripcion, URL){
+function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
 
 	var objPublicacion = {
+		id: Id,
 		usuario: Usuario,
 		descripcion: Descripcion,
 		url: URL
