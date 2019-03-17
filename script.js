@@ -1,9 +1,10 @@
 
 
-
+// Variables globales
 var arregloGeneral = [];
+var numObjetoAgregado = 0;
 
-
+// Metodos al iniciar la página
 limpiarCamposPrimerDiv();
 
 
@@ -18,14 +19,43 @@ limpiarCamposPrimerDiv();
 
 function guardarPublicacion(){
 
-	var Usuario = document.getElementsByTagName('input')[0].value = "";
-	var Descripcion = document.getElementsByTagName('input')[1].value = "";
-	var URL = document.getElementsByTagName('input')[2].value = "";
+	var Usuario = document.getElementsByTagName('input')[0].value;
+	var Descripcion = document.getElementsByTagName('input')[1].value;
+	var URL = document.getElementsByTagName('input')[2].value;
 
 	var objPublicacion = guardarDatosEnObjeto(Usuario, Descripcion, URL);
 	guardarObjetoEnArreglo(objPublicacion);
 
 	limpiarCamposPrimerDiv();
+	colocamosDivDentroDelSegundoDiv();
+
+}
+
+
+
+
+
+function datosDeObjetoDentroDeDiv(){
+
+
+
+}
+
+function colocamosDivDentroDelSegundoDiv(){
+
+	var nuevoDiv = document.createElement('div');
+	var segundoDiv = document.getElementsByTagName('div')[1];
+	segundoDiv.appendChild(nuevoDiv);
+
+	hrDentroDeDiv();
+
+}
+
+function hrDentroDeDiv(){
+
+	var hrNuevo = document.createElement('hr');
+	var segundoDiv = document.getElementsByTagName('div')[1];
+	segundoDiv.appendChild(hrNuevo);
 
 }
 
