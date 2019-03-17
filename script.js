@@ -3,7 +3,7 @@
 // Variables globales
 var arregloGeneral = [];
 var div2principal = document.getElementsByTagName('div')[1];
-var  numObjetoAgregado = 0;
+var numObjetoAgregado = 0;
 
 // Metodos al iniciar la página
 limpiarCamposPrimerDiv();
@@ -33,6 +33,7 @@ function guardarPublicacion(){
 
 	limpiarCamposPrimerDiv();
 	creacionDivUsuario();
+	colocarInfoEnDivUsuario();
 
 
 
@@ -47,11 +48,44 @@ function guardarPublicacion(){
 function colocarInfoEnDivUsuario(){
 
 	// Indicamos a que div de usuario colocaremos la informacion
+	var divUsuario = document.getElementById("divUsu" + numObjetoAgregado );
+
+	console.log(arregloGeneral[numObjetoAgregado].url);
+
+	// Colocamos la imagen con el enlace en la respectiva etiqueta
+	divUsuario.innerHTML += " <img src='" + arregloGeneral[numObjetoAgregado].url + "' alt='No se coloco una URL valida.'>";
+
+	// Colocamos el nombre de usuario
+	divUsuario.innerHTML += "<p>Usuario: " + arregloGeneral[numObjetoAgregado].usuario;
+
+	// Colocamos la descripcion
+	divUsuario.innerHTML += "<p>Descripcion: " + arregloGeneral[numObjetoAgregado].descripcion;
+
+	// Colocamos la fecha de hoy
+	var fecha = generarFechaAutomatica();
+	divUsuario.innerHTML += "<p>Fecha de subida: " + fecha;
+
+	// Colocamos el boton 
+	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")'>Comentarios: 0</button>"
+	
+	crearDivGenerarComentario();
+
+	crearDivListaComentarios();
 	
 
-	// Colocamos la imagen con el enlace
-	<img src="url"> 
+	
 
+
+}
+
+function crearDivGenerarComentario(){
+	divUsuario.innerHTML += "<div id='divGenerarComentario" + numObjetoAgregado + "'></div>";
+	document.getElementById("divGenerarComentario" + numObjetoAgregado);
+}
+
+function crearDivListaComentarios(){
+	divUsuario.innerHTML += "<div id='divListaComentarios" + numObjetoAgregado + "'></div>";
+	document.getElementById("divListaComentarios" + numObjetoAgregado);
 }
 
 function creacionDivUsuario(){
@@ -108,4 +142,23 @@ function limpiarCamposPrimerDiv(){
 	document.getElementsByTagName('input')[0].value = "";
 	document.getElementsByTagName('input')[1].value = "";
 	document.getElementsByTagName('input')[2].value = "";
+}
+
+function generarFechaAutomatica(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+
+	if(dd<10) {
+   		dd = '0'+dd
+	} 
+
+	if(mm<10) {
+    	mm = '0'+mm
+	} 
+
+	today = dd + '/' + mm + '/' + yyyy;
+
+	return today;
 }
