@@ -33,11 +33,7 @@ function guardarPublicacion(){
 
 	limpiarCamposPrimerDiv();
 	creacionDivUsuario();
-	colocarInfoEnDivUsuario();
-
-
-
-	
+	colocarInfoEnDivUsuario();// Tambien se coloca la seccion de comentarios
 
 	numObjetoAgregado++;
 
@@ -50,7 +46,28 @@ function colocarInfoEnDivUsuario(){
 	// Indicamos a que div de usuario colocaremos la informacion
 	var divUsuario = document.getElementById("divUsu" + numObjetoAgregado );
 
-	console.log(arregloGeneral[numObjetoAgregado].url);
+	colocarImagenUsuarioDescripcionFecha(divUsuario);
+
+	// Colocamos el boton 
+	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")'>Comentarios: 0</button>"
+	
+	crearDivGenerarComentario(divUsuario);
+	crearDivListadoComentarios(divUsuario);
+
+
+}
+
+
+function mostrarDivsComentarios(numDivDeUsuario){
+
+	document.getElementById("divGenerarComentario" + numDivDeUsuario).style.display = "block";
+
+	document.getElementById("divListadoComentarios" + numDivDeUsuario).style.display = "block";
+
+}
+
+
+function colocarImagenUsuarioDescripcionFecha(divUsuario){
 
 	// Colocamos la imagen con el enlace en la respectiva etiqueta
 	divUsuario.innerHTML += " <img src='" + arregloGeneral[numObjetoAgregado].url + "' alt='No se coloco una URL valida.'>";
@@ -65,28 +82,47 @@ function colocarInfoEnDivUsuario(){
 	var fecha = generarFechaAutomatica();
 	divUsuario.innerHTML += "<p>Fecha de subida: " + fecha;
 
-	// Colocamos el boton 
-	divUsuario.innerHTML += "<button onclick='mostrarDivsComentarios(" + numObjetoAgregado + ")'>Comentarios: 0</button>"
-	
-	crearDivGenerarComentario();
-
-	crearDivListaComentarios();
-	
-
-	
-
-
 }
 
-function crearDivGenerarComentario(){
+function crearDivListadoComentarios(divUsuario){
+
+	// Creamos 
+	divUsuario.innerHTML += "<div id='divListadoComentarios" + numObjetoAgregado + "'></div>";
+	var divListadoComentarios = document.getElementById("divListadoComentarios" + numObjetoAgregado );
+	divListadoComentarios.style.display = "none";
+
+
+
+	/*
+	// Colocamos campos dentro del div
+	var divListaComentarios = document.getElementById("divListadoComentarios" + numObjetoAgregado );
+
+	divGenerarComentario.innerHTML += "<br><br><hr class='myhrline'>Comentario: <input type='text' name='name' id='inputListadoComentario" + numObjetoAgregado + "'>";
+
+	divGenerarComentario.innerHTML += "<p id='botonGenerarComentario" + numObjetoAgregado + "'>Comentar</Button><hr class='myhrline'>";
+
+	// Ocultamos el div
+	divGenerarComentario.style.display = "none";
+	*/
+}
+
+function crearDivGenerarComentario(divUsuario){
+
+	// Creamos divGenerarComentario
 	divUsuario.innerHTML += "<div id='divGenerarComentario" + numObjetoAgregado + "'></div>";
-	document.getElementById("divGenerarComentario" + numObjetoAgregado);
+
+	// Colocamos campos dentro del div
+	var divGenerarComentario = document.getElementById("divGenerarComentario" + numObjetoAgregado );
+
+	divGenerarComentario.innerHTML += "<br><br><hr class='myhrline'>Escriba su comentario: <input type='text' name='name' id='generarComentarioTitulo" + numObjetoAgregado + "'>";
+
+	divGenerarComentario.innerHTML += "<button id='botonGenerarComentario" + numObjetoAgregado + "'>Comentar</Button><hr class='myhrline'>";
+
+	// Ocultamos el div
+	divGenerarComentario.style.display = "none";
+	
 }
 
-function crearDivListaComentarios(){
-	divUsuario.innerHTML += "<div id='divListaComentarios" + numObjetoAgregado + "'></div>";
-	document.getElementById("divListaComentarios" + numObjetoAgregado);
-}
 
 function creacionDivUsuario(){
 
@@ -95,28 +131,6 @@ function creacionDivUsuario(){
 	div2principal.innerHTML += nuevoDiv;
 
 }
-
-/*
-function colocamosDivDentroDelSegundoDiv(){
-
-	var nuevoDiv = document.createElement('div');
-	var segundoDiv = document.getElementsByTagName('div')[1];
-	segundoDiv.appendChild(nuevoDiv);
-
-	hrDentroDeDiv();
-
-}
-*/
-
-/*
-function hrDentroDeDiv(){
-
-	var hrNuevo = document.createElement('hr');
-	var segundoDiv = document.getElementsByTagName('div')[1];
-	segundoDiv.appendChild(hrNuevo);
-
-}
-*/
 
 function guardarObjetoEnArreglo(Objeto){
 
@@ -131,7 +145,8 @@ function guardarDatosEnObjeto(Id, Usuario, Descripcion, URL){
 		id: Id,
 		usuario: Usuario,
 		descripcion: Descripcion,
-		url: URL
+		url: URL,
+		oculto = "true";
 	}
 
 	return objPublicacion;
@@ -162,3 +177,25 @@ function generarFechaAutomatica(){
 
 	return today;
 }
+
+/*
+function colocamosDivDentroDelSegundoDiv(){
+
+	var nuevoDiv = document.createElement('div');
+	var segundoDiv = document.getElementsByTagName('div')[1];
+	segundoDiv.appendChild(nuevoDiv);
+
+	hrDentroDeDiv();
+
+}
+*/
+
+/*
+function hrDentroDeDiv(){
+
+	var hrNuevo = document.createElement('hr');
+	var segundoDiv = document.getElementsByTagName('div')[1];
+	segundoDiv.appendChild(hrNuevo);
+
+}
+*/
